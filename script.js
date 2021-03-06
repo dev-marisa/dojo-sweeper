@@ -18,7 +18,6 @@ var theDojo = [ [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0] ];
 var dojoDiv = document.querySelector("#the-dojo");
 var titleDiv = document.querySelector("#title")
-var guesses = [];
 var ninjaCount = 10; // should be a slight challenge
 var unchecked = theDojo.length*theDojo[0].length - ninjaCount;
                 
@@ -26,7 +25,7 @@ var unchecked = theDojo.length*theDojo[0].length - ninjaCount;
 shuffle2d(theDojo);
 
 // shows the dojo
-console.table(theDojo);
+// console.table(theDojo);
     
 // Creates the rows of buttons for this game
 function render(theDojo) {
@@ -144,4 +143,25 @@ function mark(i, j, event) {
     event.target.innerText = "";
     event.target.blur();
   }
+}
+
+
+// the game needed more challenge... double the ninjas!
+function hardMode(ninjaCount = 20) {
+  document.querySelector("body").style.backgroundColor = "#222";
+  document.querySelector(".hard-mode").classList.add("dark-mode");
+  document.querySelector("#title").classList.add("dark-mode");
+  unchecked = theDojo.length*theDojo[0].length - ninjaCount;
+  for(var i=0; i<theDojo.length; i++) {
+    for(var j=0; j<theDojo[i].length; j++) {
+      if(ninjaCount > 0) {
+        ninjaCount--;
+        theDojo[i][j] = 1;
+      } else {
+        theDojo[i][j] = 0;
+      }
+    }
+  }
+  shuffle2d(theDojo);
+  dojoDiv.innerHTML = render(theDojo)
 }
