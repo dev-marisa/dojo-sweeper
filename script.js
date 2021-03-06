@@ -48,7 +48,7 @@ dojoDiv.innerHTML = render(theDojo);
 
 // call this function when the game ends
 function gameOver(condition) {
-  var buttons = document.querySelectorAll("button");
+  var buttons = document.querySelectorAll("#the-dojo button");
   for(var button of buttons) {
     button.disabled = true;
   }
@@ -151,6 +151,7 @@ function hardMode(ninjaCount = 20) {
   document.querySelector("body").style.backgroundColor = "#222";
   document.querySelector(".hard-mode").classList.add("dark-mode");
   document.querySelector("#title").classList.add("dark-mode");
+  document.querySelector(".hard-mode").disabled = true;
   unchecked = theDojo.length*theDojo[0].length - ninjaCount;
   for(var i=0; i<theDojo.length; i++) {
     for(var j=0; j<theDojo[i].length; j++) {
