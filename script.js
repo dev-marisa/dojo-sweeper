@@ -136,7 +136,7 @@ function shuffle2d(arr2d) {
 // of if it was already marked then unmark it
 function mark(i, j, event) {
   event.preventDefault(); // want to prevent normal left click behavior
-  theDojo[i][j] ? console.log("Correct") : console.log("Wrong");
+  // theDojo[i][j] ? console.log("Correct") : console.log("Wrong");
   if(!event.target.innerText) {
     event.target.innerText = "X";
   } else {
