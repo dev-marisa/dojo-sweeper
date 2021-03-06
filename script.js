@@ -2,8 +2,8 @@
 var style1="color:red;font-size:1.5rem;font-weight:bold;";
 var style2="color:cyan;font-size:1.5rem;font-weight:bold;";
 console.log("%c" + "IF YOU ARE IN HERE THEN YOU ARE CHEATING!", style1);
-console.log("%c" + "IF YOU ARE A DOJO STUDENT...", style2);
-console.log("%c" + "GOOD LUCK THIS IS A CHALLENGE!", style2);
+// console.log("%c" + "IF YOU ARE A DOJO STUDENT...", style2);
+// console.log("%c" + "GOOD LUCK THIS IS A CHALLENGE!", style2);
 
 // various constants go here
 var theDojo = [ [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
