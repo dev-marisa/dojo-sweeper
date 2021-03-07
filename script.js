@@ -21,15 +21,14 @@ const timerDiv = document.querySelector("#timer");
 const dojoDiv = document.querySelector("#the-dojo");
 let ninjaCount = 10; // should be a slight challenge
 let unchecked = theDojo.length*theDojo[0].length - ninjaCount;
-let inputMode = "CHECK"; 
-let isMobile = true;
+let inputMode = "CHECK";
 
 // in game timer
 let timer = null;
 
 // allow the user on mobile to set their mode
 function setMode(element) {
-  let buttons = document.querySelectorAll("#mobile-controls button");
+  let buttons = document.querySelectorAll("#controls button");
   buttons.forEach(btn => btn.disabled = false);
   element.disabled = true;
   inputMode = element.innerText.toUpperCase();
@@ -88,7 +87,7 @@ const offsets = [{x: 0, y: -1}, {x: 1, y: -1}, {x: 1, y: 0}, {x: 1, y: 1},
 // if the mat has a 0 then adjacent zeroes are filled
 function howMany(i, j, event) {
   setTimer(0); // don't start counting until the user starts guessing
-  if(isMobile && inputMode === "MARK") {
+  if(inputMode === "MARK") {
     return mark(event);
   }
   // doing it this way so we can recursively search
@@ -166,11 +165,13 @@ function hardMode(ninjaCount = 20) {
   if(timer) {
     clearInterval(timer);
     timerDiv.innerText = 0;
-    timerDiv.style.color = "#fff"; 
   }
+  timerDiv.style.color = "#fff"; 
   document.querySelector("body").style.backgroundColor = "#222";
-  document.querySelector(".hard-mode").classList.add("dark-mode");
-  document.querySelector(".hard-mode").disabled = true;
+  const button = document.querySelector("button.hard-mode")
+  button.disabled = true;
+  button.classList.add("dark-mode");
+  button.innerText = "Wait I was kidding!"
   titleDiv.classList.add("dark-mode");
   unchecked = theDojo.length*theDojo[0].length - ninjaCount;
   for(let i=0; i<theDojo.length; i++) {
@@ -187,16 +188,6 @@ function hardMode(ninjaCount = 20) {
   dojoDiv.innerHTML = render(theDojo);
 }
 
-// quick and dirty check if on mobile
-function isOnPhone() {
-  if(screen.width > 800) {
-    document.querySelector("#mobile-controls").remove();
-    isMobile = false;
-  } else {
-    document.querySelector("#mobile-controls button").disabled = true;
-  }
-}
-
 function setTimer(startValue) {
   if(!timer) {
     timerDiv.innerText = startValue;
@@ -209,7 +200,8 @@ function setTimer(startValue) {
 
 // basically starts the whole game
 function gameStart() {
-  isOnPhone();
+  // make sure the controls button works as advertised 
+  document.querySelector("#controls button").disabled = true;
   shuffle2d(theDojo);
   // uncomment to show the ninja locations
   // console.table(theDojo);

@@ -10,13 +10,13 @@
 h1, h2 {
     text-align: center;
     padding: 20px;
-    margin-bottom: 20px;
 }
 
 button {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+    background-color: #eee;
 }
     
 #the-dojo {
@@ -63,8 +63,8 @@ button:active, button:focus {
     border-bottom: 2px solid #ccc;
 }
 
-.tatami:disabled {
-    filter: brightness(92%);
+button:disabled {
+    background-color: #f3f3f3;
 }
 
 button:hover {
@@ -72,12 +72,14 @@ button:hover {
     filter: brightness(85%);
 }
 
-#mobile-controls {
+#controls {
     width: 320px;
-    margin: 20px auto;
+    margin: 0 auto;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-#mobile-controls button {
+#controls button {
     padding: 0.5rem;
 }
