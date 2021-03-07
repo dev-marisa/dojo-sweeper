@@ -14,8 +14,8 @@ h1, h2 {
 }
     
 #the-dojo {
-    height: 500px;
-    width: 500px;
+    height: 320px;
+    width: 320px;
     background-color: wheat;
     margin: 0 auto;
     display: flex;
@@ -29,10 +29,9 @@ h1, h2 {
 }
     
 .tatami {
-    height: 50px;
-    width: 50px;
-    font-size: 1.5rem;
-    color: red;
+    height: 32px;
+    width: 32px;
+    font-size: 1.2rem;
     background-color: wheat;
     border: 2px solid #ccc;
     border-right: 2px solid #999;
@@ -59,10 +58,20 @@ button:active, button:focus {
 }
 
 .tatami:disabled {
-    color: #333;
+    filter: brightness(92%);
 }
 
 button:hover {
     cursor: pointer;
-    filter: brightness(90%);
+    filter: brightness(85%);
+}
+
+#mobile-controls {
+    width: 320px;
+    margin: 20px auto;
+    display: flex;
+}
+
+#mobile-controls button {
+    padding: 0.5rem;
 }
