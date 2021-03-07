@@ -7,7 +7,7 @@
     font-family: 'Press Start 2P', monospace;
 }
 
-h1, h2 {
+h2 {
     text-align: center;
     padding: 20px;
 }
@@ -45,9 +45,10 @@ button {
 }
 
 .hard-mode {
+    width: 320px;
+    height: 60px;
     display: block;
-    padding: 1.2rem;
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin: 2rem auto;
 }
 
