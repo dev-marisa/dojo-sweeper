@@ -171,8 +171,9 @@ function hardMode(ninjaCount = 20) {
   const button = document.querySelector("button.hard-mode")
   button.disabled = true;
   button.classList.add("dark-mode");
-  button.innerText = "Wait I was kidding!"
+  button.innerText = "Wait I was joking!"
   titleDiv.classList.add("dark-mode");
+  titleDiv.innerText = "HARDCORE MODE";
   unchecked = theDojo.length*theDojo[0].length - ninjaCount;
   for(let i=0; i<theDojo.length; i++) {
     for(let j=0; j<theDojo[i].length; j++) {
