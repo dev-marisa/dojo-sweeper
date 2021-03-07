@@ -64,13 +64,19 @@ button:active, button:focus {
     border-bottom: 2px solid #ccc;
 }
 
+.tatami:disabled {
+    /* background-color: inherit; */
+    background-color: wheat;
+    filter: brightness(92%);
+}
+
 button:disabled {
     background-color: #f3f3f3;
 }
 
 button:hover {
     cursor: pointer;
-    filter: brightness(85%);
+    filter: brightness(84%);
 }
 
 #controls {
