@@ -12,6 +12,12 @@ h1, h2 {
     padding: 20px;
     margin-bottom: 20px;
 }
+
+button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
     
 #the-dojo {
     height: 320px;

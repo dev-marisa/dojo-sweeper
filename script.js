@@ -16,12 +16,16 @@ const theDojo = [ [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
                   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0] ];
-const titleDiv = document.querySelector("#title")
+const titleDiv = document.querySelector("#title");
+const timerDiv = document.querySelector("#timer");
 const dojoDiv = document.querySelector("#the-dojo");
 let ninjaCount = 10; // should be a slight challenge
 let unchecked = theDojo.length*theDojo[0].length - ninjaCount;
 let inputMode = "CHECK"; 
 let isMobile = true;
+
+// in game timer
+let timer = null;
 
 // allow the user on mobile to set their mode
 function setMode(element) {
@@ -53,6 +57,7 @@ function render(theDojo) {
 
 // call this function when the game ends
 function gameOver(condition) {
+  clearInterval(timer);
   let buttons = document.querySelectorAll("#the-dojo button");
   for(let button of buttons) {
     button.disabled = true;
@@ -82,15 +87,14 @@ const offsets = [{x: 0, y: -1}, {x: 1, y: -1}, {x: 1, y: 0}, {x: 1, y: 1},
 // if the mat has a ninja then they lose!
 // if the mat has a 0 then adjacent zeroes are filled
 function howMany(i, j, event) {
-  console.log(isMobile);
-  console.log(inputMode);
+  setTimer(0); // don't start counting until the user starts guessing
   if(isMobile && inputMode === "MARK") {
     return mark(event);
   }
   // doing it this way so we can recursively search
   const element = getElementBy(i, j);
   let numNinjas = 0;
-  if(element.disabled || element.innerText == "X") {
+  if(element.disabled || element.innerText === "X") {
     return; // break case for recursion
   }
   for(let offset of offsets) {
@@ -104,7 +108,7 @@ function howMany(i, j, event) {
   element.disabled = true;
   element.blur();
   unchecked--;
-  if(numNinjas == 0) {
+  if(numNinjas === 0) {
     element.innerText = "";
     for(let offset of offsets) {
       let validInY = i+offset.y > -1 && i+offset.y < theDojo.length;
@@ -159,10 +163,15 @@ function mark(event) {
 
 // the game needed more challenge... double the ninjas!
 function hardMode(ninjaCount = 20) {
+  if(timer) {
+    clearInterval(timer);
+    timerDiv.innerText = 0;
+    timerDiv.style.color = "#fff"; 
+  }
   document.querySelector("body").style.backgroundColor = "#222";
   document.querySelector(".hard-mode").classList.add("dark-mode");
-  document.querySelector("#title").classList.add("dark-mode");
   document.querySelector(".hard-mode").disabled = true;
+  titleDiv.classList.add("dark-mode");
   unchecked = theDojo.length*theDojo[0].length - ninjaCount;
   for(let i=0; i<theDojo.length; i++) {
     for(let j=0; j<theDojo[i].length; j++) {
@@ -175,7 +184,7 @@ function hardMode(ninjaCount = 20) {
     }
   }
   shuffle2d(theDojo);
-  dojoDiv.innerHTML = render(theDojo)
+  dojoDiv.innerHTML = render(theDojo);
 }
 
 // quick and dirty check if on mobile
@@ -185,6 +194,16 @@ function isOnPhone() {
     isMobile = false;
   } else {
     document.querySelector("#mobile-controls button").disabled = true;
+  }
+}
+
+function setTimer(startValue) {
+  if(!timer) {
+    timerDiv.innerText = startValue;
+    timer = setInterval( () => {
+      let time = parseInt(timerDiv.innerText) + 1;
+      timerDiv.innerText = time; 
+    }, 1000);
   }
 }
 
