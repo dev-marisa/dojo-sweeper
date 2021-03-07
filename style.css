@@ -90,3 +90,15 @@ button:hover {
 #controls button {
     padding: 0.5rem;
 }
+
+.footer {
+    width: 100%;
+    position: absolute;
+    bottom: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+a {
+    color: #777;
+}
