@@ -201,6 +201,8 @@ function setTimer(startValue) {
   }
 }
 
+// TODO - localstorge
+
 // basically starts the whole game
 function gameStart() {
   // make sure the controls button works as advertised 
