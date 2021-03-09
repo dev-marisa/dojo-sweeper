@@ -7,6 +7,10 @@
     font-family: 'Press Start 2P', monospace;
 }
 
+body, h1#title, button.hard-mode {
+    transition: 500ms;
+}
+
 h2 {
     text-align: center;
     padding: 20px;
@@ -55,7 +59,7 @@ button {
 .dark-mode {
     background: linear-gradient(-30deg, magenta,  rebeccapurple, magenta, rebeccapurple);
     background-size: 400% 400%;
-	animation: gradient 10s ease infinite;
+	animation: gradient 7s ease infinite;
     border: none;
 }
 

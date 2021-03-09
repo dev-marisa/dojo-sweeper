@@ -172,6 +172,7 @@ function hardMode(ninjaCount = 20) {
   button.disabled = true;
   button.classList.add("dark-mode");
   button.innerText = "Wait I was joking!"
+  button.blur();
   titleDiv.classList.add("dark-mode");
   titleDiv.innerText = "HARDCORE MODE";
   unchecked = theDojo.length*theDojo[0].length - ninjaCount;
@@ -189,6 +190,7 @@ function hardMode(ninjaCount = 20) {
   dojoDiv.innerHTML = render(theDojo);
 }
 
+// displays a timer at the top of the game board
 function setTimer(startValue) {
   if(!timer) {
     timerDiv.innerText = startValue;
