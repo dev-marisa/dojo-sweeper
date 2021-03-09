@@ -154,7 +154,7 @@ function mark(event) {
     event.target.style.color = "#f00";
     event.target.innerText = "X";
   } else {
-    event.target.style.color = "#000";
+    event.target.style.color = "#646464";
     event.target.innerText = "";
     event.target.blur();
   }
