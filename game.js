@@ -267,9 +267,14 @@ function displayLeaderboard(scores) {
   modalInnerDiv.innerHTML = res;
 }
 
+// closes the leaderboard
 function dismiss() {
   modalDiv.classList.remove("active");
   normalMode();
+  inputMode = "CHECK";
+  let buttons = document.querySelectorAll("#controls button");
+  buttons.forEach(btn => btn.disabled = false);
+  document.querySelector("#controls button").disabled = true;
 }
 
 // basically starts the whole game
