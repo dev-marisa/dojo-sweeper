@@ -73,12 +73,23 @@ function gameOver(condition) {
     default:
       console.error("Error: gameOver(condition) requires \"WIN\" or \"LOSE\"");
   }
-  modalDiv.classList.add("pre-active");
+  modalDiv.classList.add("active");
+  modalDiv.style.opacity = 0;
   setTimeout(() => {
-    modalDiv.classList.add("active");
-    modalDiv.classList.remove("pre-active");
-    displayLeaderboard(getLeaderboard());
+    modalDiv.style.opacity = 1;
+    let score = parseInt(timerDiv.innerText);
+    timer = null;
+    timerDiv.innerText = 0;
+    let leaderboard = getLeaderboard();
+    if(condition === "WIN") {
+      displayLeaderboard(leaderboard, score);
+    } else {
+      displayLeaderboard(leaderboard);
+    }
   }, 1000);
+  setTimeout(() => {
+    document.querySelector("#modal input")?.focus();
+  }, 2200);
 }
 
 // helper function to select an element based on it's i and j
@@ -240,31 +251,73 @@ function setTimer(startValue) {
 
 // TODO - retrieve leaders from localstorage
 function getLeaderboard() {
-
-  let leaders = {
-    "normal": [{name: "aaa", score: 111}, {name: "bbb", score: 222}, {name: "ccc", score: 333}],
-    "hard": [{name: "aaa", score: 222}, {name: "bbb", score: 333}, {name: "ccc", score: 444}]
+  let leaderboard = localStorage.getItem("leaderboard");
+  try{
+    return JSON.parse(leaderboard);
+  } catch(error) {
+    console.error(error);
+    return {
+      "normal": [{name: "Anne", score: 111}, {name: "Bill", score: 222}, {name: "Chris", score: 333}],
+      "hard": [{name: "Anne", score: 222}, {name: "Bill", score: 333}, {name: "Chris", score: 444}]
+    };
   }
-  return leaders;
 }
 
 // TODO - save leaders into localstorage
 function setLeaderboard(scores) {
-
+  const leaderboard = JSON.stringify(scores);
+  localStorage.setItem("leaderboard", leaderboard);
 }
 
 // displays the current leader information
-function displayLeaderboard(scores) {
+function displayLeaderboard(scores, newScore) {
+  if(newScore && ninjaCount <= 10) {
+    scores.normal.push({name: "Anonymous", score: newScore, new: true});
+    scores.normal.sort( (a, b) => a.score > b.score );
+    scores.normal.pop();
+  } else if(newScore && ninjaCount > 10) {
+    scores.hard.push({name: "Anonymous", score: newScore, new: true});
+    scores.hard.sort( (a, b) => a.score > b.score );
+    scores.hard.pop();
+  }
   let res = "<h3>Hard</h3>";
-  for(let score of scores.hard) {
-    res += `<p><span>${score.name}</span><span>${score.score}</span></p>`;
+  for(let i=0; i<3; i++) {
+    if(scores.hard[i].new) {
+      res += `<p><span><input type="text" onchange="setName(this)"></span><span>${scores.hard[i].score}</span></p>`;
+    } else {
+      res += `<p><span>${scores.hard[i].name}</span><span>${scores.hard[i].score}</span></p>`;
+    }
   }
   res += "<h3>Normal</h3>";
-  for(let score of scores.normal) {
-    res += `<p><span>${score.name}</span><span>${score.score}</span></p>`;
+  for(let i=0; i<3; i++) {
+    if(scores.normal[i].new) {
+      res += `<p><span><input type="text" onchange="setName(this)"></span><span>${scores.normal[i].score}</span></p>`;
+    } else {
+      res += `<p><span>${scores.normal[i].name}</span><span>${scores.normal[i].score}</span></p>`;
+    }
   }
   res += `<button onclick="dismiss()">Play Again</button>`;
   modalInnerDiv.innerHTML = res;
+  setLeaderboard(scores);
+}
+
+// this is the name of the user with a high score
+function setName(element) {
+  const scores = getLeaderboard();
+  for(let key in scores) {
+    for(let score of scores[key]) {
+      if(score.new) {
+        // clean off the new marker
+        delete score.new;
+        if(element.value.length < 1) {
+          return;
+        } else {
+          score.name = element.value;
+        }
+      }
+    }
+  }
+  setLeaderboard(scores);
 }
 
 // closes the leaderboard
