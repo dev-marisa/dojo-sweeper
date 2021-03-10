@@ -124,3 +124,58 @@ button:hover {
 a {
     color: #777;
 }
+
+/* modal styling */
+
+#modal {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #5555;
+    display: none;
+    transition: 1000ms;
+}
+
+#modal-inner {
+    width: 320px;
+    min-height: 320px;
+    background-color: #fff;
+    padding: 20px;
+    margin: 0 auto;
+    margin-top: 50px;
+    box-shadow: 5px 5px #000;
+}
+
+#modal.pre-active {
+    display: block;
+    opacity: 0;
+}
+
+#modal.active {
+    display: block;
+    opacity: 1;
+}
+
+#modal p {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+#modal p:nth-child(even) {
+    background-color: #eee;
+}
+
+#modal h3 {
+    padding: 5px 0;
+    margin: 10px 0;
+    border-bottom: 1px solid #000;
+}
+
+#modal button {
+    margin-top: 20px;
+    width: 100%;
+    height: 50px;
+}

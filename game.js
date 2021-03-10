@@ -19,6 +19,8 @@ const theDojo = [ [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 const titleDiv = document.querySelector("#title");
 const timerDiv = document.querySelector("#timer");
 const dojoDiv = document.querySelector("#the-dojo");
+const modalDiv = document.querySelector("#modal");
+const modalInnerDiv = document.querySelector("#modal-inner");
 let ninjaCount = 10; // should be a slight challenge
 let unchecked = theDojo.length*theDojo[0].length - ninjaCount;
 let inputMode = "CHECK";
@@ -57,7 +59,7 @@ function render(theDojo) {
 // call this function when the game ends
 function gameOver(condition) {
   clearInterval(timer);
-  let buttons = document.querySelectorAll("#the-dojo button");
+  let buttons = document.querySelectorAll("button");
   for(let button of buttons) {
     button.disabled = true;
   }
@@ -71,6 +73,12 @@ function gameOver(condition) {
     default:
       console.error("Error: gameOver(condition) requires \"WIN\" or \"LOSE\"");
   }
+  modalDiv.classList.add("pre-active");
+  setTimeout(() => {
+    modalDiv.classList.add("active");
+    modalDiv.classList.remove("pre-active");
+    displayLeaderboard(getLeaderboard());
+  }, 1000);
 }
 
 // helper function to select an element based on it's i and j
@@ -168,13 +176,42 @@ function hardMode(ninjaCount = 20) {
   }
   timerDiv.style.color = "#fff"; 
   document.querySelector("body").style.backgroundColor = "#222";
-  const button = document.querySelector("button.hard-mode")
+  const button = document.querySelector("button.hard-mode");
   button.disabled = true;
   button.classList.add("dark-mode");
   button.innerText = "Wait I was joking!"
   button.blur();
   titleDiv.classList.add("dark-mode");
   titleDiv.innerText = "HARDCORE MODE";
+  unchecked = theDojo.length*theDojo[0].length - ninjaCount;
+  for(let i=0; i<theDojo.length; i++) {
+    for(let j=0; j<theDojo[i].length; j++) {
+      if(ninjaCount > 0) {
+        ninjaCount--;
+        theDojo[i][j] = 1;
+      } else {
+        theDojo[i][j] = 0;
+      }
+    }
+  }
+  shuffle2d(theDojo);
+  dojoDiv.innerHTML = render(theDojo);
+}
+
+// sets the game back to normal to play again
+function normalMode(ninjaCount = 10) {
+  if(timer) {
+    clearInterval(timer);
+    timerDiv.innerText = 0;
+  }
+  timerDiv.style.color = "#000"; 
+  document.querySelector("body").style.backgroundColor = "#fff";
+  const button = document.querySelector("button.hard-mode");
+  button.disabled = false;
+  button.classList.remove("dark-mode");
+  button.innerText = "Play on Hard Mode";
+  titleDiv.classList.remove("dark-mode");
+  titleDiv.innerText = "Dojo Sweeper";
   unchecked = theDojo.length*theDojo[0].length - ninjaCount;
   for(let i=0; i<theDojo.length; i++) {
     for(let j=0; j<theDojo[i].length; j++) {
@@ -201,7 +238,39 @@ function setTimer(startValue) {
   }
 }
 
-// TODO - localstorge
+// TODO - retrieve leaders from localstorage
+function getLeaderboard() {
+
+  let leaders = {
+    "normal": [{name: "aaa", score: 111}, {name: "bbb", score: 222}, {name: "ccc", score: 333}],
+    "hard": [{name: "aaa", score: 222}, {name: "bbb", score: 333}, {name: "ccc", score: 444}]
+  }
+  return leaders;
+}
+
+// TODO - save leaders into localstorage
+function setLeaderboard(scores) {
+
+}
+
+// displays the current leader information
+function displayLeaderboard(scores) {
+  let res = "<h3>Hard</h3>";
+  for(let score of scores.hard) {
+    res += `<p><span>${score.name}</span><span>${score.score}</span></p>`;
+  }
+  res += "<h3>Normal</h3>";
+  for(let score of scores.normal) {
+    res += `<p><span>${score.name}</span><span>${score.score}</span></p>`;
+  }
+  res += `<button onclick="dismiss()">Play Again</button>`;
+  modalInnerDiv.innerHTML = res;
+}
+
+function dismiss() {
+  modalDiv.classList.remove("active");
+  normalMode();
+}
 
 // basically starts the whole game
 function gameStart() {
