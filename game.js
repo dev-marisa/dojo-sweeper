@@ -252,6 +252,12 @@ function setTimer(startValue) {
 // TODO - retrieve leaders from localstorage
 function getLeaderboard() {
   let leaderboard = localStorage.getItem("leaderboard");
+  if(leaderboard === null) {
+    return {
+      "normal": [{name: "Anne", score: 111}, {name: "Bill", score: 222}, {name: "Chris", score: 333}],
+      "hard": [{name: "Anne", score: 222}, {name: "Bill", score: 333}, {name: "Chris", score: 444}]
+    };
+  }
   try{
     return JSON.parse(leaderboard);
   } catch(error) {
