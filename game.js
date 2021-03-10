@@ -289,7 +289,7 @@ function displayLeaderboard(scores, newScore) {
   let res = "<h3>Hard</h3>";
   for(let i=0; i<3; i++) {
     if(scores.hard[i].new) {
-      res += `<p><span><input type="text" onchange="setName(this)"></span><span>${scores.hard[i].score}</span></p>`;
+      res += `<p class="is-cyan"><span><input type="text" onchange="setName(this)" maxlength="12"></span><span>${scores.hard[i].score}</span></p>`;
     } else {
       res += `<p><span>${scores.hard[i].name}</span><span>${scores.hard[i].score}</span></p>`;
     }
@@ -297,7 +297,7 @@ function displayLeaderboard(scores, newScore) {
   res += "<h3>Normal</h3>";
   for(let i=0; i<3; i++) {
     if(scores.normal[i].new) {
-      res += `<p><span><input type="text" onchange="setName(this)"></span><span>${scores.normal[i].score}</span></p>`;
+      res += `<p class="is-cyan"><span><input type="text" onchange="setName(this)" maxlength="12"></span><span>${scores.normal[i].score}</span></p>`;
     } else {
       res += `<p><span>${scores.normal[i].name}</span><span>${scores.normal[i].score}</span></p>`;
     }
